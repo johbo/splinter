@@ -5,6 +5,7 @@
 # license that can be found in the LICENSE file.
 
 from __future__ import with_statement
+import logging
 import time
 import re
 from contextlib import contextmanager
@@ -15,6 +16,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 from splinter.driver import DriverAPI, ElementAPI
 from splinter.element_list import ElementList
 from splinter.utils import warn_deprecated
+
+
+log = logging.getLogger(__name__)
 
 
 class BaseWebDriver(DriverAPI):
@@ -41,8 +45,11 @@ class BaseWebDriver(DriverAPI):
         return self.driver.current_url
 
     def visit(self, url):
-        self.connect(url)
-        self.ensure_success_response()
+        # TODO: This needs proxy support first
+        log.warn(
+            'Connection checking disabled due to lacking proxy support')
+        #self.connect(url)
+        #self.ensure_success_response()
         self.driver.get(url)
 
     def back(self):
